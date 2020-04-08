@@ -1,3 +1,14 @@
+# sdcc intermedie files
+*.asm
+*.ihx
+*.lk
+*.lst
+*.map
+*.mem
+*.rel
+*.rst
+*.sym
+
 # Prerequisites
 *.d
 
