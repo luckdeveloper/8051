@@ -25,11 +25,8 @@ void main()
 
 void init_int0()
 {
-#ifdef PROTEUS
-    INT0 = 0; // Level Triggering
-#else
-    INT0 = 1; // Edge Triggering
-#endif
+   INT0 = 1; // Edge Triggering
+   // INT0 = 0; // Level Triggering
 
     EX0 = 1;    // enable external INT0 interrupt 
     EA = 1;	// enable CPU interrupt
@@ -62,13 +59,9 @@ void int0() interrupt 0
 void int0() __interrupt (0)
 #endif
 {
-    delay(10000);
+    delay(10000); // software de-jitter filter
 
-#ifdef PROTEUS
-    if (key_3 == 1)	 // Ê¹ÓÃProteus Ä£Äâ
-#else
-    if (key_3 == 0)	 // Ê¹ÓÃÆÕÖÐ¿ª·¢°å
-#endif
+    if (key_3 == 0)	 // key is pressed
     {
         revert_led();
     }
