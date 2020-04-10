@@ -5,7 +5,7 @@
 # PATH
 
 #
-# use single makefile to compile all the target
+# use single makefile to compile multipule ihx and hex file
 #
 # 
 
@@ -14,17 +14,23 @@ SRCDIR = ./src
 OBJDIR = ./obj
 IHXDIR = ./ihx
 HEXDIR = ./hex
-
 LIBDIR  =  
 # ------------------------------------------------------
 # Target and Source
-TARGET = $(HEXDIR)/hello_world
+
+_DEPS = platform.h
+DEPS = $(patsubst %,$(INCDIR)/%,$(_DEPS))
 
 #C_SRC = $(SRCDIR)/helloworld.c
 C_SRC = $(wildcard  $(SRCDIR)/*.c)
 ASM_SRC = 
 
 C_SRC_FILE = $(notdir $(C_SRC))
+
+# This is called as substitution reference. 
+# if C_SRC_FILE has values 'foo.c bar.c', C_OBJ_FILE will have 'foo.c.rel bar.c.rel'.
+# if C_SRC_FILE has values 'foo.c bar.c', IHX_FILE will have 'foo.ihx bar.ihx'.
+# if C_SRC_FILE has values 'foo.c bar.c', HEX_FILE will have 'foo.hex bar.hex'.
 C_OBJ_FILE = $(C_SRC_FILE:%.c=%.c.rel)
 IHX_FILE = $(C_SRC_FILE:%.c=%.ihx)
 HEX_FILE = $(C_SRC_FILE:%.c=%.hex)
@@ -71,27 +77,30 @@ LFLAGS = $(LIBPATH) $(LIBS) -m$(MCU_MODEL) --model-$(MODEL) $(CODE_SIZE) $(IRAM_
 # ------------------------------------------------------
 # S = @
 
-.PHONY: hex clean ihx
-
-ihx: $(IHX)
-
-#all: $(TARGET).hex
-hex: $(HEX)
-
-
 $(HEXDIR)/%.hex: $(IHXDIR)/%.ihx
 	$(S) packihx $^ > $@
 
-#$(OBJDIR)/%.ihx: $(OBJ)
-$(IHXDIR)/%.ihx: $(OBJDIR)/%.c.rel
+# link 
+$(IHXDIR)/%.ihx: $(OBJDIR)/%.c.rel 
 	$(S) $(CC) -o $@ $(LFLAGS) $^
 
-$(OBJDIR)/%.c.rel: $(SRCDIR)/%.c
+# compile, assemble c source file
+$(OBJDIR)/%.c.rel: $(SRCDIR)/%.c $(DEPS)
 	$(S) $(CC) -o $@ $(CFLAGS) -c $^
 
+# compile, assemble asm source file
 $(OBJDIR)/%.asm.rel: $(SRCDIR)/%.asm
 	$(S) $(AS) $(AFLAGS) -o $@ $^ 
 
+
+.PHONY: ihx hex clean
+
+#default target
+ihx: $(IHX)
+
+hex: $(HEX)
+
 clean:
 	$(S) rm -rf $(OBJDIR)/*
+	$(S) rm -rf $(IHXDIR)/*
 	$(S) rm -rf $(HEXDIR)/*
