@@ -85,7 +85,7 @@ $(IHXDIR)/%.ihx: $(OBJDIR)/%.c.rel
 	$(S) $(CC) -o $@ $(LFLAGS) $^
 
 # compile, assemble c source file
-$(OBJDIR)/%.c.rel: $(SRCDIR)/%.c $(DEPS)
+$(OBJDIR)/%.c.rel: $(SRCDIR)/%.c
 	$(S) $(CC) -o $@ $(CFLAGS) -c $^
 
 # compile, assemble asm source file

@@ -1,7 +1,6 @@
 #include "platform.h"
 
 //#define PROTEUS
-
 #ifdef KEIL
     sbit led 	= P2^0; // led connected with P2
     sbit key_3 	= P3^2;	// key3 connected with P3^2(INT0)
