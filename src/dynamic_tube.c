@@ -6,6 +6,9 @@
 
 #include "platform.h"
 
+#define GPIO_DIGTAL_TUBE P0 // the tube was connected to PO
+
+
 //============timer0 int =====================//
 #define OSC_FREQ	12000000UL
 
@@ -29,6 +32,7 @@ sbit led = P2 ^ 0;
     #define led P2_0
 #endif
 
+
 //===========================================
 unsigned char g_tube_code_table[] = {
     0x3f, 0x06, 0x5b, 0x4f, // 0, 1, 2, 3
@@ -39,15 +43,16 @@ unsigned char g_tube_code_table[] = {
 
 #define TUBE_CODE_TABLE_COUNT (sizeof(g_tube_code_table)/sizeof(g_tube_code_table[0]))
 
+// 74HC138 line decoder define
 unsigned char g_line_decorder[][3] = {
-    {0, 0, 0},
-    {1, 0, 0},
-    {0, 1, 0},
-    {1, 1, 0},
-    {0, 0, 1},
-    {1, 0, 1},
-    {0, 1, 1},
-    {1, 1, 1}
+    {0, 0, 0}, // 0
+    {1, 0, 0}, // 1
+    {0, 1, 0}, // 2
+    {1, 1, 0}, // 3
+    {0, 0, 1}, // 4
+    {1, 0, 1}, // 5
+    {0, 1, 1}, // 6
+    {1, 1, 1}  // 7
 };
 #define LINE_COUNT (sizeof(g_line_decorder)/sizeof(g_line_decorder[0]))
 
@@ -127,7 +132,7 @@ void change_tube()
 
 void change_number()
 {
-    P0 = g_tube_code_table[g_number_index];
+    GPIO_DIGTAL_TUBE = g_tube_code_table[g_number_index];
 
     //move to next number
     g_number_index = (g_number_index + 1) % TUBE_CODE_TABLE_COUNT;

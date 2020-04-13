@@ -6,6 +6,8 @@
 
 #include "platform.h"
 
+#define GPIO_DIGTAL_TUBE P0 // The digital tube was connecto to PO
+
 #ifdef KEIL
 sbit lsa = P2 ^ 2;
 sbit lsb = P2 ^ 3;
@@ -15,6 +17,7 @@ sbit lsc = P2 ^ 4;
     #define lsb P2_3
     #define lsc P2_4
 #endif
+
 
 
 unsigned char tube_code_table[] = {
@@ -33,7 +36,7 @@ void main()
     lsb = 0;
     lsc = 0;
 
-    P0 = tube_code_table[0];
+    GPIO_DIGTAL_TUBE = tube_code_table[0];
 
     for (;;)
     {
