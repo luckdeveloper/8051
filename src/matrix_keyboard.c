@@ -2,6 +2,10 @@
 // The tube was connected to P0 at the develop board.
 // common cathode
 // use 74HC138 Line Decoder
+// the matrix keyboard was connect from P10~P17, 
+// all the negtive pin are connected from P10-P13, add the positive pin are connected from P14-P17
+// if the key is down, the pins are set to low level
+
 
 
 #include "platform.h"
@@ -61,10 +65,10 @@ void key_down_scan(void)
     unsigned char key;
 
 
-    // 1. detective which row 
+    // 1. detective which column
     GPIO_KEY = 0x0f;
 
-    if (GPIO_KEY != 0x0f) // detect which row 
+    if (GPIO_KEY != 0x0f) // detect which colomn
     {
         delay(1000); // software d-jitter buffer
         if (GPIO_KEY != 0x0f) // check again
@@ -81,19 +85,23 @@ void key_down_scan(void)
             case(0X0e):
                 key = 3; break;
             }
-            // 2. detect which col
+            // 2. detect which row
             GPIO_KEY = 0XF0;
             switch (GPIO_KEY)
             {
-            case(0X70):
+            case(0X70): // binary: 0111 0000
                 key = key; break;
-            case(0Xb0):
+            case(0Xb0): // binary: 1011 0000
                 key = key + 4; break;
-            case(0Xd0):
+            case(0Xd0): // 1101 0000
                 key = key + 8; break;
-            case(0Xe0):
+            case(0Xe0): // 1110 0000
                 key = key + 12; break;
             }
+
+            // 1. unless when key is up 
+            // 2. or press time hold for 500ms
+            //
             while ((a < 50) && (GPIO_KEY != 0xf0)) 
             {
                 delay(1000);
