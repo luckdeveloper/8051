@@ -8,17 +8,15 @@
 
 #define GPIO_DIGTAL_TUBE P0 // The digital tube was connecto to PO
 
-#ifdef KEIL
-sbit lsa = P2 ^ 2;
-sbit lsb = P2 ^ 3;
-sbit lsc = P2 ^ 4; 
-#else
+#if defined SDCC || defined __SDCC
     #define lsa P2_2
     #define lsb P2_3
     #define lsc P2_4
+#else
+    sbit lsa = P2 ^ 2;
+    sbit lsb = P2 ^ 3;
+    sbit lsc = P2 ^ 4; 
 #endif
-
-
 
 unsigned char tube_code_table[] = {
     0x3f, 0x06, 0x5b, 0x4f, // 0, 1, 2, 3

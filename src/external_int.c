@@ -1,12 +1,11 @@
 #include "platform.h"
 
-//#define PROTEUS
-#ifdef KEIL
-    sbit led 	= P2^0; // led connected with P2
-    sbit key_3 	= P3^2;	// key3 connected with P3^2(INT0)
-#else
+#if defined SDCC || defined __SDCC
     #define led 	P2_0
     #define key_3 	P3_2 
+#else
+    sbit led 	= P2^0; // led connected with P2
+    sbit key_3 	= P3^2;	// key3 connected with P3^2(INT0)
 #endif
 
 
@@ -38,9 +37,7 @@ void delay(unsigned int i)
 
 void revert_led()
 {
-#ifdef KELI
-    led = ~led;
-#else
+#if defined SDCC || defined __SDCC
     if (led == 0)
     {
         led = 1;
@@ -49,13 +46,16 @@ void revert_led()
     {
         led = 0;
     }
+#else
+    led = ~led;
 #endif
 }
 
-#ifdef KEIL
-void int0() interrupt 0
-#else
+
+#if defined SDCC || defined __SDCC
 void int0() __interrupt (0)
+#else
+void int0() interrupt 0
 #endif
 {
     delay(10000); // software de-jitter filter

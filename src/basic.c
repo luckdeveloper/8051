@@ -1,10 +1,11 @@
 #include "platform.h"
 
-#ifdef KEIL
-sbit led = P2 ^ 0; // led connected with P2
-#else
+#if defined SDCC || defined __SDCC
     #define led P2_0
+#else
+    sbit led = P2 ^ 0; // led connected with P2
 #endif
+
 
 void delay(unsigned int i);
 
