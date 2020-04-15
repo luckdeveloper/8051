@@ -140,5 +140,8 @@ void timer0_int() __interrupt (1)
 void timer0_int() interrupt 1
 #endif
 {
-    timer0_int_cb();
+    if (g_stTimer0Int.cb)
+    {
+        g_stTimer0Int.cb();
+    }
 }
