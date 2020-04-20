@@ -5,6 +5,7 @@
 
 
 #include "platform.h"
+#include "tube.h"
 
 #define GPIO_DIGTAL_TUBE P0 // The digital tube was connecto to PO
 

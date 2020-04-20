@@ -3,10 +3,10 @@
 #ifndef PLATFORM_H__
 #define PLATFORM_H__
 
-#ifdef KEIL
-    #include "reg52.h"
-#else
+#if defined SDCC || defined __SDCC
     #include "8052.h"
+#else
+    #include "reg52.h"
 #endif
-
+    
 #endif

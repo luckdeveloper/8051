@@ -18,7 +18,7 @@ LIBDIR  =
 # ------------------------------------------------------
 # Target and Source
 
-_DEPS = platform.h
+_DEPS = platform.h lcd1602.h tube.h matrix_keyboard.h
 DEPS = $(patsubst %,$(INCDIR)/%,$(_DEPS))
 
 #C_SRC = $(SRCDIR)/helloworld.c
