@@ -65,7 +65,11 @@ void main()
 }
 
 
-
+/**
+ * change the tube every timer interrupt
+ * 
+ * @author qiufengli (2020/4/29)
+ */
 void change_tube()
 {
     lsa = g_line_decorder[g_line_deocorder_index][0];
@@ -76,6 +80,11 @@ void change_tube()
     g_line_deocorder_index = (g_line_deocorder_index+1) % LINE_COUNT;
 }
 
+/**
+ * change the number every time interrupt
+ * 
+ * @author qiufengli (2020/4/29)
+ */
 void change_number()
 {
     GPIO_DIGTAL_TUBE = g_tube_code_table[g_number_index];
@@ -84,6 +93,11 @@ void change_number()
     g_number_index = (g_number_index + 1) % TUBE_CODE_TABLE_COUNT;
 }
 
+/**
+ * revert the led
+ * 
+ * @author qiufengli (2020/4/29)
+ */
 void revert_led()
 {
 #if defined SDCC || defined __SDCC
@@ -130,6 +144,8 @@ void timer0_int_1ms()
     // reconfigure 1ms
     TH0 = (65536 - 1000 * (OSC_FREQ / 12000000)) >> 8;
     TL0 = (65536 - 1000 * (OSC_FREQ / 12000000)) & 0x00FF;
+
+    // use ms timer to generate one second timer
     if (count >= 1000)
     {
         count = 0;
