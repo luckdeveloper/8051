@@ -11,9 +11,9 @@
 #define LCD1602_EN      P2_7
 #define LCD1602_DB      P0
 #else
-sbit LCD1602_RS = P2^4;
+sbit LCD1602_RS = P2^6;
 sbit LCD1602_RW = P2^5;
-sbit LCD1602_EN = P2^6;
+sbit LCD1602_EN = P2^7;
 #define LCD1602_DB      P0
 #endif
 
