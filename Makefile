@@ -1,14 +1,11 @@
 #
 # SDCC Makefile for mcs51
-# 
-# ------------------------------------------------------
-# PATH
-
-#
 # use single makefile to compile multipule ihx and hex file
 #
-# 
+#-------------------------------------------------------
+# PAH
 
+_dummy := $(shell mkdir -p obj ihx hex)
 INCDIR = ./inc
 SRCDIR = ./src
 OBJDIR = ./obj
