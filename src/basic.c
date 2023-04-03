@@ -8,15 +8,16 @@
 
 
 void delay(unsigned int i);
+void delay_1000ms(); //@11.0592MHz
 
 void main()
 {
     for (;;)
     {
         led = 0;
-        delay(500);
+        delay_1000ms();
         led = 1;
-        delay(500);
+        delay_1000ms();
     }
 }
 
@@ -24,3 +25,21 @@ void delay(unsigned int i)
 {
     while (i--);
 }
+
+void delay_1000ms()		//@11.0592MHz
+{
+	unsigned char i, j, k;
+
+	//_nop_();
+	i = 8;
+	j = 1;
+	k = 243;
+	do
+	{
+		do
+		{
+			while (--k);
+		} while (--j);
+	} while (--i);
+}
+
