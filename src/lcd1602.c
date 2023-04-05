@@ -18,7 +18,7 @@
 
 void lcd1602_init(void);
 void lcd1602_cmd(unsigned char);
-void lcd1602_putchar(unsigned char);
+void lcd1602_display_char(unsigned char);
 void lcd1602_clear(void);
 
 // utilities function
@@ -28,11 +28,11 @@ void main()
 {
 
     lcd1602_init();
-    lcd1602_putchar('h');
-    lcd1602_putchar('e');
-    lcd1602_putchar('l');
-    lcd1602_putchar('l');
-    lcd1602_putchar('o');
+    lcd1602_display_char('h');
+    lcd1602_display_char('e');
+    lcd1602_display_char('l');
+    lcd1602_display_char('l');
+    lcd1602_display_char('o');
 
     for (;;)
     {
@@ -104,7 +104,7 @@ void lcd1602_cmd(unsigned char cmd)
  * 
  * @param ch 
  */
-void lcd1602_putchar(unsigned char ch)
+void lcd1602_display_char(unsigned char ch)
 {
     LCD1602_DB = ch;
     LCD1602_RS = 1;
